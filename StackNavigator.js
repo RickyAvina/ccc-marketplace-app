@@ -24,8 +24,8 @@ const StackNavigator = () => {
         </>
       ) : (
         <Stack.Group>
-          <Stack.Screen name="Register" component={RegisterScreen} />
           <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Register" component={RegisterScreen} />
         </Stack.Group>
       )}
 

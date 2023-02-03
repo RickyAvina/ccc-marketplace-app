@@ -33,7 +33,7 @@ const RegisterScreen = ({navigation}) => {
       <View className="flex-1">
         <Text className="font-semibold text-4xl text-[#EA4335]">Create an account</Text>
         <Text className="text-lg text-[#787878]">{"Let's get you started"}</Text>
-        <View className="flex-1 pt-5 mx-10 mb-[-45px]">
+        <View className="pt-5 mx-10 mb-10">
           <TextInput
             value={name}
             onChangeText={setName}
