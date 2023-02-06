@@ -8,7 +8,7 @@ import RegisterScreen from './screens/RegisterScreen';
 const Stack = createNativeStackNavigator();
 
 const StackNavigator = () => {
-  const user = null;
+  const user = "ricky";
 
   return (
     <Stack.Navigator
