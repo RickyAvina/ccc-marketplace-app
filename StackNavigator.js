@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import HomeScreen from './screens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
+import AddPostModalScreen from './screens/AddPostModalScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -19,7 +20,11 @@ const StackNavigator = () => {
       {user ? (
         <>
           <Stack.Group>
+          {/* <Stack.Screen name='Modal' component={AddPostModalScreen}/> */}
             <Stack.Screen name="Home" component={HomeScreen} />
+          </Stack.Group>
+          <Stack.Group screenOptions={{ presentation: 'modal' }}>
+            <Stack.Screen name='AddPostModal' component={AddPostModalScreen}/>
           </Stack.Group>
         </>
       ) : (

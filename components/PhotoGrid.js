@@ -23,14 +23,6 @@ const PhotoGrid = ({data: _data}) => {
           paddingBottom: 150
         }}
       />
-      <View className="absolute bottom-[20px] items-center w-full">
-        <TouchableOpacity
-          className="items-center justify-center bg-red-600 w-[80px] h-[80px] rounded-full"
-          onPress={() => {console.log("Press")}}
-          >
-          <Text className="items-center justify-center pt-[2px] text-5xl text-white">+</Text>
-      </TouchableOpacity>
-      </View>
      </SafeAreaView>
   )
 }
