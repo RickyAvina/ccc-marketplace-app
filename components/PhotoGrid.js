@@ -1,21 +1,19 @@
-import { View, Text, FlatList, StyleSheet, Dimensions, Image, SafeAreaView } from 'react-native'
+import { View, Text, FlatList, StyleSheet, Dimensions, Image, SafeAreaView, TouchableOpacity } from 'react-native'
 import React, { useEffect, useLayoutEffect } from 'react'
 import PostPhoto from './PostPhoto'
-import { AntDesign } from '@expo/vector-icons'; 
+import SafeViewAndroid from './SafeViewAndroid';
 
 
 const PhotoGrid = ({data: _data}) => {
-  const spacing = 10;
   const numColumns = 2;
 
   const [data, setData] = React.useState({});
   useLayoutEffect(()=> {
     setData(formatData(_data, numColumns))
   })
-  
 
   return (
-    <SafeAreaView className="pt-5 mx-1">
+    <SafeAreaView style={SafeViewAndroid.AndroidSafeArea} className="pt-5 mx-1">
       <FlatList
         numColumns={numColumns}
         data={data}
@@ -25,6 +23,14 @@ const PhotoGrid = ({data: _data}) => {
           paddingBottom: 150
         }}
       />
+      <View className="absolute bottom-[20px] items-center w-full">
+        <TouchableOpacity
+          className="items-center justify-center bg-red-600 w-[80px] h-[80px] rounded-full"
+          onPress={() => {console.log("Press")}}
+          >
+          <Text className="items-center justify-center pt-[2px] text-5xl text-white">+</Text>
+      </TouchableOpacity>
+      </View>
      </SafeAreaView>
   )
 }
