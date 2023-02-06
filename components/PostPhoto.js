@@ -15,7 +15,7 @@ const PostPhoto = ({item}) => {
           <Text className="mt-auto font-bold">{`$${item.price ?? DEFAULT_PRICE}`}</Text>
           <View className="flex-row items-center">
             <AntDesign name="shoppingcart" size={20} color="#747474" />
-            <Text className="ml-1 text-[#747474]">2</Text>
+            <Text className="ml-1 text-[#747474]">{item.numPurchased ?? 0}</Text>
           </View>
         </View>
       </View>

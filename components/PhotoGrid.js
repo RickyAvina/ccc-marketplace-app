@@ -1,34 +1,40 @@
-import { View, Text, FlatList, StyleSheet, Dimensions, Image } from 'react-native'
-import React, { useEffect } from 'react'
+import { View, Text, FlatList, StyleSheet, Dimensions, Image, SafeAreaView } from 'react-native'
+import React, { useEffect, useLayoutEffect } from 'react'
 import PostPhoto from './PostPhoto'
+import { AntDesign } from '@expo/vector-icons'; 
 
 
 const PhotoGrid = ({data: _data}) => {
+  const spacing = 10;
   const numColumns = 2;
-  const [data, setData] = React.useState(_data);
 
-  useEffect(() => {
-    formatData(data, numColumns);
-  }, [data])
+  const [data, setData] = React.useState({});
+  useLayoutEffect(()=> {
+    setData(formatData(_data, numColumns))
+  })
+  
 
   return (
-    <View className="pt-5 mx-1">
+    <SafeAreaView className="pt-5 mx-1">
       <FlatList
         numColumns={numColumns}
         data={data}
         renderItem={renderItem}
         keyExtractor={item => item.id}
-        columnWrapperStyle={{flex: 1, justifyContent: 'space-around'}}
+        contentContainerStyle={{
+          paddingBottom: 150
+        }}
       />
-     </View>
+     </SafeAreaView>
   )
 }
 
 const renderItem = ({item, index}) => {
   if (item.empty) {
-    return <View className="flex-1 m-[3px] h-[180px] w-[90px] bg-transparent"/>
+    return <View className='bg-transparent items-center m-[3px] flex-1 h-[180px] w-[180px]'/>
   }
-  return <PostPhoto item={item}/>
+  return <PostPhoto item={item} />
+
 };
 
 const formatData = (data, numColumns) => {
@@ -39,6 +45,7 @@ const formatData = (data, numColumns) => {
     data.push({key: `empty-${amountItemsLastRow}`, empty: true});
     amountItemsLastRow++;
   }
+
   return data;
 };
 
