@@ -1,32 +1,27 @@
 import { View, Text, Image, Dimensions, StyleSheet } from 'react-native'
 import React, { useEffect } from 'react'
+import { AntDesign } from '@expo/vector-icons'; 
 
 
 const PostPhoto = ({item}) => {
+  const DEFAULT_PRICE = 10;
+
   return (
-    <View style={styles.item}>
-      <View className="flex-1 w-full h-full bg-blue-500">
-        <Text>Hey</Text>
+    <View className="flex-1 m-[3px] items-center justify-center h-[180px] w-[90px] border-[#A1A1A1] border-[1px]">
+      <Image source={{ uri: item.url }} className='bg-gray-300 p-4 w-full h-[60%]' />
+      <View className="flex-1 w-full bg-white p-2">
+        <Text>{item.title}</Text>
+        <View className="flex-row justify-between mt-auto">
+          <Text className="mt-auto font-bold">{`$${item.price ?? DEFAULT_PRICE}`}</Text>
+          <View className="flex-row items-center">
+            <AntDesign name="shoppingcart" size={20} color="#747474" />
+            <Text className="ml-1 text-[#747474]">2</Text>
+          </View>
+        </View>
       </View>
-      <Text>{item.name}</Text>
-    </View>
+     </View>
   )
 }
 
-const styles = StyleSheet.create({
-  item: {
-    backgroundColor: '#A1A1A1',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    margin: 1,
-    height: 120,
-    width: 90
-  },
-  // infoContainer: {
-  //   width: '100%'
-  //   backgroundColor: 'red',
-  // },
-});
 
 export default PostPhoto
