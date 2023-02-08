@@ -7,7 +7,19 @@ import * as ImagePicker from 'expo-image-picker';
 import { data } from '../photoData'
 
 
-const HomeScreen = ({navigation}) => {
+const HomeScreen = ({route, navigation}) => {
+
+  if (route != null && route.params != null) {
+    // launch async request to upload photo, use placeholder in the meantime
+    /* (alias) const data: {
+      id: number;
+      title: string;
+      url: string;
+      time_created: string;
+    }[]
+    import data
+*/ 
+  }
 
   const addPhoto = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -61,8 +73,6 @@ const HomeScreen = ({navigation}) => {
               <Text className="items-center justify-center pt-[2px] text-5xl text-white">+</Text>
             </TouchableOpacity>
           </View>
-
-          {/* <PostPhoto imageUri={data[0].url} /> */}
         </SafeAreaView>
       </LinearGradient>
     </View>

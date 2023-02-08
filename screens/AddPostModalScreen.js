@@ -1,11 +1,10 @@
-import { View, Text, TouchableOpacity, Image, TextInput } from 'react-native'
+import { View, Text, TouchableOpacity, Image, TextInput, Alert } from 'react-native'
 import React, { useEffect } from 'react'
 import { Foundation } from '@expo/vector-icons'; 
 
 
-
 const AddPostModalScreen = ({route, navigation}) => {
-  // const [image, setImage] = React.useState(route.params.uri)
+  const [image, setImage] = React.useState(route.params.uri)
 
   const [inspiration, setInspiration] = React.useState("")
   const [meaning, setMeaning] = React.useState("")
@@ -19,7 +18,8 @@ const AddPostModalScreen = ({route, navigation}) => {
     return {
       inspiration: clean(inspiration),
       meaning: clean(meaning),
-      location: clean(location)
+      location: clean(location),
+      imageUri: image,
     }
   }
 
@@ -30,15 +30,14 @@ const AddPostModalScreen = ({route, navigation}) => {
           <Foundation name="x" size={24} color="white" />
         </TouchableOpacity>
         <Text className="text-white font-bold text-lg ml-[20px]">New Post</Text>
-        <TouchableOpacity onPress={() => navigation.navigate("", prepareProps())}>
+        <TouchableOpacity onPress={() => navigation.navigate("Home", prepareProps())}>
           <Text className="text-[#00A1B7] font-semibold text-lg">Next</Text>
         </TouchableOpacity>
       </View>
       <Image
-        source={require('../assets/flower-bg.jpg')}
+        source={{ uri: image}}
         className="w-full h-80"
         />
-       {/* {image && <Image source = {{ uri: image }} style={{ width: 200, height: 200}} /> } */}
 
        {/* Questions */}
        <View className="flex-1 w-full h-full items-start px-5 pt-3 space-y-3" >
