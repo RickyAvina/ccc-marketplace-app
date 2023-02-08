@@ -20,7 +20,7 @@ const StackNavigator = () => {
       {user ? (
         <>
           <Stack.Group>
-          {/* <Stack.Screen name='Modal' component={AddPostModalScreen}/> */}
+          <Stack.Screen name='Modal' component={AddPostModalScreen}/>
             <Stack.Screen name="Home" component={HomeScreen} />
           </Stack.Group>
           <Stack.Group screenOptions={{ presentation: 'modal' }}>
