@@ -1,6 +1,7 @@
 import { View, Text, Image, Dimensions, StyleSheet } from 'react-native'
 import React, { useEffect } from 'react'
 import { AntDesign } from '@expo/vector-icons'; 
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 const PostPhoto = ({item}) => {
