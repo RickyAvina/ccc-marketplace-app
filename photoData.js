@@ -3,6 +3,9 @@ export const data = [
     id: 1,
     title: 'Photo1',
     url: 'https://fastly.picsum.photos/id/700/800/800.jpg?hmac=_L54KN0UFsvYiEOzsSfxaPWNCE9lgrKjTbNaPB0si20',
+    inspiration: "I was truly inspired by the best",
+    meaning: "Meaningful text",
+    location: "Santa Fe, New Mexico, USA",
     time_created: '1001782829'
   },
   {
