@@ -7,7 +7,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { data } from '../photoData'
 
 
-const HomeScreen = ({route, navigation}) => {
+const DesignsScreen = ({route, navigation}) => {
 
   if (route != null && route.params != null) {
     // launch async request to upload photo, use placeholder in the meantime
@@ -40,7 +40,7 @@ const HomeScreen = ({route, navigation}) => {
         <SafeAreaView style={SafeViewAndroid.AndroidSafeArea} className="flex-1">
           {/* Header */}
           <View className="ml-5">
-            <Text className="text-4xl font-bold">Uploads</Text>
+            <Text className="text-4xl font-bold">Designs</Text>
             <Text className="text-2xl font-semibold text-[#AAAAAA]">Welcome, user!</Text>
           </View>
           {/* Stats */}
@@ -81,4 +81,4 @@ const HomeScreen = ({route, navigation}) => {
 
 
 
-export default HomeScreen
+export default DesignsScreen
