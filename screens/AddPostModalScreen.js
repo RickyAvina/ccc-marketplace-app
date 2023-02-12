@@ -5,7 +5,6 @@ import { Foundation } from '@expo/vector-icons';
 
 const AddPostModalScreen = ({route, navigation}) => {
   const [image, setImage] = React.useState(route.params.uri)
-
   const [inspiration, setInspiration] = React.useState("")
   const [meaning, setMeaning] = React.useState("")
   const [location, setLocation] = React.useState("")
@@ -41,7 +40,6 @@ const AddPostModalScreen = ({route, navigation}) => {
 
        {/* Questions */}
        <View className="flex-1 w-full h-full items-start px-5 pt-3 space-y-3" >
-
         <View className="flex-row justify-center items-center">
           <Image source={require('../assets/icons/lightbulb.png')} className="w-[40px] h-[40px] mr-2" />
           <TextInput

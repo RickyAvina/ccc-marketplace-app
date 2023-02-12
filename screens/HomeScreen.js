@@ -62,7 +62,7 @@ const HomeScreen = ({route, navigation}) => {
           </View>
 
           {/* photo grid */}
-          <PhotoGrid data={data}/>
+          <PhotoGrid data={data} navigation={navigation}/>
 
           {/* Photo Picker Button */}
           <View className="absolute bottom-[20px] items-center w-full">

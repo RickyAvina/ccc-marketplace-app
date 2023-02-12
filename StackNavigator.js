@@ -5,6 +5,7 @@ import HomeScreen from './screens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import AddPostModalScreen from './screens/AddPostModalScreen';
+import DetailedPost from './screens/DetailedPost';
 
 const Stack = createNativeStackNavigator();
 
@@ -21,6 +22,7 @@ const StackNavigator = () => {
         <>
           <Stack.Group>
             <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="DetailedPost" component={DetailedPost} />
           </Stack.Group>
           <Stack.Group screenOptions={{ presentation: 'modal' }}>
             <Stack.Screen name='AddPostModal' component={AddPostModalScreen}/>
