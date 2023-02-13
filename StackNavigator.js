@@ -7,6 +7,7 @@ import RegisterScreen from './screens/RegisterScreen';
 import AddPostModalScreen from './screens/AddPostModalScreen';
 import DetailedPost from './screens/DetailedPost';
 import HomeScreen from './screens/HomeScreen';
+import PaymentsScreen from './screens/PaymentsScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +23,7 @@ const StackNavigator = () => {
       {user ? (
         <>
           <Stack.Group>
+            <Stack.Screen name="PaymentsScreen" component={PaymentsScreen} />
             <Stack.Screen name="HomeScreen" component={HomeScreen} />
             <Stack.Screen name="DesignsScreen" component={DesignsScreen} />
             <Stack.Screen name="DetailedPost" component={DetailedPost} />
