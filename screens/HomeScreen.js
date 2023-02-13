@@ -38,8 +38,8 @@ const HomeScreen = () => {
         <View className="flex-row flex-1 justify-between">
           <HomeScreenItem
             image={require('../assets/home/profile.png')}
-            title="Profile"
-            dest="ProfileScreen"
+            title="Account"
+            dest="AccountScreen"
             />
           <HomeScreenItem/>
         </View>
