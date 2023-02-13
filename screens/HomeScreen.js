@@ -19,11 +19,14 @@ const HomeScreen = () => {
 
       <View className="flex-1 flex-col gap-y-4 mx-2 mb-[20%] pt-[-40px]">
         <View className="flex-row flex-1 justify-between">
+          {/* Designs */}
           <HomeScreenItem
             image={require('../assets/home/designs.jpg')}
             title="Designs"  
             dest="DesignsScreen"
           />
+
+          {/* Payments  */}
           <HomeScreenItem 
             image={require('../assets/home/payments.jpg')}
             title="Payments"
@@ -31,6 +34,7 @@ const HomeScreen = () => {
             />
         </View>
 
+        {/* Account */}
         <View className="flex-row flex-1 justify-between">
           <HomeScreenItem
             image={require('../assets/home/profile.png')}

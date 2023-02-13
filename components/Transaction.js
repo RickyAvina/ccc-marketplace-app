@@ -13,11 +13,11 @@ const Transaction = ({transaction}) => {
       />
 
       <View className="pl-2">
-        <Text className="text-base font-semibold">Congo Clothing Co.</Text>
-        <Text className="text-[#5F5F5F]">01/22/2023 4:23</Text>
+        <Text className="text-base font-semibold">{transaction.merchantId}</Text>
+        <Text className="text-[#5F5F5F]">{transaction.datetime}</Text>
       </View>
 
-      <Text className="ml-auto text-lg font-bold text-[#309B0B]">$15</Text>
+      <Text className="ml-auto text-lg font-bold text-[#309B0B]">${transaction.amount}</Text>
       
     </View>
   )

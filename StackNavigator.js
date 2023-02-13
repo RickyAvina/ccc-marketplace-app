@@ -23,10 +23,10 @@ const StackNavigator = () => {
       {user ? (
         <>
           <Stack.Group>
-            <Stack.Screen name="PaymentsScreen" component={PaymentsScreen} />
             <Stack.Screen name="HomeScreen" component={HomeScreen} />
             <Stack.Screen name="DesignsScreen" component={DesignsScreen} />
             <Stack.Screen name="DetailedPost" component={DetailedPost} />
+            <Stack.Screen name="PaymentsScreen" component={PaymentsScreen} />
           </Stack.Group>
           <Stack.Group screenOptions={{ presentation: 'modal' }}>
             <Stack.Screen name='AddPostModal' component={AddPostModalScreen}/>

@@ -5,10 +5,12 @@ import SafeViewAndroid from '../components/SafeViewAndroid'
 import PhotoGrid from '../components/PhotoGrid';
 import * as ImagePicker from 'expo-image-picker';
 import { data } from '../photoData'
+import { Ionicons } from '@expo/vector-icons';
+
 
 
 const DesignsScreen = ({route, navigation}) => {
-
+  
   if (route != null && route.params != null) {
     // launch async request to upload photo, use placeholder in the meantime
     /* (alias) const data: {
@@ -38,11 +40,14 @@ const DesignsScreen = ({route, navigation}) => {
     <View className="flex-1">
       <LinearGradient colors={['#FFE146', '#FFFFFF']} start={[0, 0]} end={[0, 0.3]} style={{flex: 1}}>
         <SafeAreaView style={SafeViewAndroid.AndroidSafeArea} className="flex-1">
-          {/* Header */}
-          <View className="ml-5">
-            <Text className="text-4xl font-bold">Designs</Text>
-            <Text className="text-2xl font-semibold text-[#AAAAAA]">Welcome, user!</Text>
-          </View>
+        {/* Navbar */}
+        <View className="flex-row items-end ml-2 mt-2">
+          <TouchableOpacity onPress={() => {navigation.goBack();}}>
+            <Ionicons name="arrow-back" size={24} color="#5F5F5F" />
+          </TouchableOpacity>
+          <Text className="font-semibold text-lg text-[#5F5F5F] ml-2">Designs</Text>
+        </View>
+
           {/* Stats */}
           <View className="flex-row justify-between px-10 mt-5">
             <View className="items-center">

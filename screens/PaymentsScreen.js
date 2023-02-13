@@ -1,11 +1,14 @@
-import { View, Text, SafeAreaView, ImageBackground } from 'react-native'
+import { View, Text, SafeAreaView, ImageBackground, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { Ionicons } from '@expo/vector-icons';
 import SafeViewAndroid from '../components/SafeViewAndroid';
 import Transaction from '../components/Transaction';
+import { useNavigation } from '@react-navigation/native';
 
 
 const PaymentsScreen = () => {
+  const navigation = useNavigation();
+
   const dummyTransactions = [
     {
       status: "SUCCESSFUL",
@@ -32,13 +35,6 @@ const PaymentsScreen = () => {
       datetime: "2021-01-01 12:58:25",
     },
   ]
-  
-  // const sortedData = dummyTransactions.sort((t1, t2) => {
-  //   const d1 = Date.parse(t1.datetime);
-  //   const d2 = Date.parse(t2.datetime);
-
-  //   return d1 < d2;
-  // })
 
   const sortLatest = (t1, t2) => {
     const d1 = Date.parse(t1.datetime);
@@ -53,7 +49,6 @@ const PaymentsScreen = () => {
   }
 
 
-
   return (
     <ImageBackground
       resizeMode='cover'
@@ -64,7 +59,9 @@ const PaymentsScreen = () => {
 
         {/* Navbar */}
         <View className="flex-row items-end ml-2 mt-2">
-          <Ionicons name="arrow-back" size={24} color="#5F5F5F" />
+          <TouchableOpacity onPress={() => {navigation.goBack();}}>
+            <Ionicons name="arrow-back" size={24} color="#5F5F5F" />
+          </TouchableOpacity>
           <Text className="font-semibold text-lg text-[#5F5F5F] ml-2">Payments</Text>
         </View>
 
