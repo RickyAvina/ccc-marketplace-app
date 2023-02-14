@@ -9,6 +9,8 @@ import DetailedPost from './screens/DetailedPost';
 import HomeScreen from './screens/HomeScreen';
 import PaymentsScreen from './screens/PaymentsScreen';
 import AccountScreen from './screens/AccountScreen';
+import AccountDetailsScreen from './screens/AccountDetailsScreen';
+import PaymentDetailsScreen from './screens/PaymentDetailsScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -24,11 +26,15 @@ const StackNavigator = () => {
       {user ? (
         <>
           <Stack.Group>
+            <Stack.Group>
+              <Stack.Screen name="AccountScreen" component={AccountScreen} />
+              <Stack.Screen name="AccountDetails" component={AccountDetailsScreen} />
+              <Stack.Screen name="PaymentDetails" component={PaymentDetailsScreen} />              
+            </Stack.Group>
             <Stack.Screen name="HomeScreen" component={HomeScreen} />
             <Stack.Screen name="DesignsScreen" component={DesignsScreen} />
             <Stack.Screen name="DetailedPost" component={DetailedPost} />
             <Stack.Screen name="PaymentsScreen" component={PaymentsScreen} />
-            <Stack.Screen name="AccountScreen" component={AccountScreen} />
           </Stack.Group>
           <Stack.Group screenOptions={{ presentation: 'modal' }}>
             <Stack.Screen name='AddPostModal' component={AddPostModalScreen}/>
