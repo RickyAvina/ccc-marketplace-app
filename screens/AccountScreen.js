@@ -12,7 +12,7 @@ const AccountScreen = () => {
   const [name, setName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState('');
   const phoneInput = useRef(null);
-
+  const [bio, setBio] = useState("");
 
   return (
     <ImageBackground
@@ -26,7 +26,7 @@ const AccountScreen = () => {
           <TouchableOpacity onPress={() => { navigation.goBack(); }}>
             <Ionicons name="arrow-back" size={24} color="#5F5F5F" />
           </TouchableOpacity>
-          <Text className="font-semibold text-lg text-[#5F5F5F] ml-2">Payments</Text>
+          <Text className="font-semibold text-lg text-[#5F5F5F] ml-2">Account</Text>
         </View>
 
         {/* Profile Summary */}
@@ -63,7 +63,7 @@ const AccountScreen = () => {
                 layout='second'
                 onChangeText={setPhoneNumber}
                 containerStyle={{
-                  marginLeft: -20,
+                  marginLeft: -18,
                   backgroundColor: "transparent",
                 }}
                 codeTextStyle={{
@@ -75,20 +75,39 @@ const AccountScreen = () => {
                 textContainerStyle={{
                   backgroundColor: "white",
                   paddingLeft: -10,
-                  paddingVertical: 10,
+                  paddingVertical: 5,
                 }}
               />
             </View>
 
+            {/* Password Field */}
             <TouchableOpacity
               className="flex-row justify-between border-b-[1px] border-[#747474] items-center p-2"
-              onPress={() => { navigation.navigate("AccountDetails") }}>
+              onPress={() => { navigation.navigate("PasswordDetails") }}>
               <Text className="text-[#747474]">Password</Text>
               <AntDesign
                 name="rightcircleo"
                 className=""
                 size={24}
                 color="#747474" />
+            </TouchableOpacity>
+
+            {/* Bio  */}
+            <View className="border-b-[1px] border-[#747474]">
+              <TextInput
+                value={bio}
+                onChangeText={setBio}  // auto save?
+                multiline={true}
+                maxHeight={60}
+                numberOfLines={3}
+                className="m-2"
+                placeholder='Bio'
+              />
+            </View>
+
+            {/* Logout Button */}
+            <TouchableOpacity className="bg-[#FFE146] mx-20 items-center border-[1px] border-[#757575] mt-5 rounded-md">
+              <Text className="font-bold my-3 ">Logout</Text>
             </TouchableOpacity>
 
           </View>
