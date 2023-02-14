@@ -51,9 +51,6 @@ const LoginScreen = ({navigation}) => {
               backgroundColor: "white",
               paddingLeft: -10,
               paddingVertical: 10,
-              highlighted: {
-                backgroundColor: 'yellow',
-              },
              }}
              textInputStyle={{
               fontSize: 17,

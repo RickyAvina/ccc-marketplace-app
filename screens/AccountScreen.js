@@ -1,15 +1,18 @@
 import { View, Text, ImageBackground, SafeAreaView, Image, TouchableOpacity, TextInput } from 'react-native'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import SafeViewAndroid from '../components/SafeViewAndroid'
 import { useNavigation } from '@react-navigation/native'
 import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
+import PhoneInput from 'react-native-phone-number-input'
 
 
 const AccountScreen = () => {
   const navigation = useNavigation();
   const [name, setName] = useState("");
-  
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const phoneInput = useRef(null);
+
 
   return (
     <ImageBackground
@@ -43,18 +46,51 @@ const AccountScreen = () => {
           <Text className="font-bold text-lg">Profile Info</Text>
           <View className="flex-1">
             {/* Account details */}
-            <TextInput
-              value={name}
-              onChangeText={setName}  // auto save?
-              className="border-b-[1px] border-[#747474] my-2"
-              placeholder='First Name, Last Name'
-            />
-            <TextInput
-              value={name}
-              onChangeText={setName}  // auto save?
-              className="border-b-[1px] border-[#747474] my-2"
-              placeholder='User name'
-            />
+            <View className="border-b-[1px] border-[#747474]">
+              <TextInput
+                value={name}
+                onChangeText={setName}  // auto save?
+                className="m-2"
+                placeholder='First Name, Last Name'
+              />
+            </View>
+
+            <View className="border-b-[1px] border-[#747474]">
+              <PhoneInput
+                ref={phoneInput}
+                defaultValue={phoneNumber}
+                defaultCode="US"
+                layout='second'
+                onChangeText={setPhoneNumber}
+                containerStyle={{
+                  marginLeft: -20,
+                  backgroundColor: "transparent",
+                }}
+                codeTextStyle={{
+                  color: "#747474"
+                }}
+                textInputStyle={{
+                  color: "#747474"
+                }}
+                textContainerStyle={{
+                  backgroundColor: "white",
+                  paddingLeft: -10,
+                  paddingVertical: 10,
+                }}
+              />
+            </View>
+
+            <TouchableOpacity
+              className="flex-row justify-between border-b-[1px] border-[#747474] items-center p-2"
+              onPress={() => { navigation.navigate("AccountDetails") }}>
+              <Text className="text-[#747474]">Password</Text>
+              <AntDesign
+                name="rightcircleo"
+                className=""
+                size={24}
+                color="#747474" />
+            </TouchableOpacity>
+
           </View>
         </View>
       </SafeAreaView>
