@@ -2,6 +2,7 @@ import { View, Text, ImageBackground, Image, TextInput, StyleSheet, TouchableOpa
 import React, { useRef } from 'react'
 import SafeViewAndroid from '../components/SafeViewAndroid'
 import PhoneInput from 'react-native-phone-number-input'
+import useAuth from '../hooks/useAuth'
 
 
 const LoginScreen = ({navigation}) => {
@@ -10,6 +11,10 @@ const LoginScreen = ({navigation}) => {
   const [password, setPassword] = React.useState('')
   const [confirmPassword, setConfirmPassword] = React.useState('')
   const phoneInput = useRef(null);
+
+  const {request, promptAsync} = useAuth();
+
+  // console.log(request, promptAsync);
   
   return (
     <View className="flex-1 bg-white">
@@ -71,7 +76,11 @@ const LoginScreen = ({navigation}) => {
             <Text className="text-white font-semibold text-lg">Login</Text>
           </TouchableOpacity>
           <Text className="text-gray-700 text-xl my-1">or</Text>
-          <TouchableOpacity style={{elevation: 1}} className="w-full items-center py-2 rounded-xl bg-white flex-row border-[1.5px] border-[#CCCCCC] ">
+          <TouchableOpacity
+            style={{elevation: 1}}
+            className="w-full items-center py-2 rounded-xl bg-white flex-row border-[1.5px] border-[#CCCCCC]"
+            onPress={() => {promptAsync()}}
+          >
             <Image
               source={require('../assets/google-icon.png')}
               className="w-10 h-10 mx-3"

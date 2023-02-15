@@ -14,7 +14,7 @@ import PasswordDetailsScreen from './screens/PasswordDetailsScreen';
 const Stack = createNativeStackNavigator();
 
 const StackNavigator = () => {
-  const user = "ricky";
+  const user = null;
 
   return (
     <Stack.Navigator
