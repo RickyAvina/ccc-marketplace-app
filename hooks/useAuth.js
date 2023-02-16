@@ -6,30 +6,35 @@ import { useMemo } from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useContext } from 'react';
+import {useAuth0, Auth0Provider} from 'react-native-auth0';
 
 const AuthContext = createContext({});
 
-WebBrowser.maybeCompleteAuthSession();
-
 export const AuthProvider = ({ children }) => {
-  const [request, response, promptAsync] = Google.useAuthRequest({
-    expoClientId: "844247946871-3hs1t766n5qgbnbs4gl3ufkk3571ccmb.apps.googleusercontent.com"
-  })
+  const {authorize, clearSession, user} = useAuth0();
 
-  useEffect(() => {
-    console.log('resp', response)
-    if (response?.type === "success") {
-      const { authentication } = response
+  const login = async () => {
+    try {
+      await authorize({scope: 'openid profile email'});
+    } catch (e) {
+      console.log(e);
     }
-  }, [response])
+  }
 
-  const memoedValue = useMemo(() => ({
-    request,
-    promptAsync
-  }), [request, promptAsync])
+  useEffect(()=> {
+    if (user !== null && user != undefined) {
+      console.log(user);
+    } else {
+      console.log("null user")
+    }
+  }, user);
+
+  const memoedValue = useMemo(()=> ({
+    login
+  }), [login])
 
   return (
-    <AuthContext.Provider value={memoedValue}>
+      <AuthContext.Provider value={memoedValue}>
       {children}
     </AuthContext.Provider>
   )

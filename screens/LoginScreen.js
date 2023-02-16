@@ -12,7 +12,7 @@ const LoginScreen = ({navigation}) => {
   const [confirmPassword, setConfirmPassword] = React.useState('')
   const phoneInput = useRef(null);
 
-  const {request, promptAsync} = useAuth();
+  const {login} = useAuth();
 
   // console.log(request, promptAsync);
   
@@ -79,7 +79,7 @@ const LoginScreen = ({navigation}) => {
           <TouchableOpacity
             style={{elevation: 1}}
             className="w-full items-center py-2 rounded-xl bg-white flex-row border-[1.5px] border-[#CCCCCC]"
-            onPress={() => {promptAsync()}}
+            onPress={() => login()}
           >
             <Image
               source={require('../assets/google-icon.png')}
