@@ -21,22 +21,34 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
+  const logout = async () => {
+    try {
+      await clearSession();
+    } catch (e) {
+      console.log('Log out cancelled');
+    }
+  }
+
   useEffect(()=> {
     if (user !== null && user != undefined) {
       console.log(user);
     } else {
       console.log("null user")
     }
-  }, user);
+  }, [user]);
 
   const memoedValue = useMemo(()=> ({
-    login
-  }), [login])
+    user,
+    login,
+    logout
+  }), [user, login, logout])
 
   return (
-      <AuthContext.Provider value={memoedValue}>
+    <Auth0Provider domain={"dev-86rvru3cjw5ztru0.us.auth0.com"} clientId={"Gwr6p98ErOSQtJXBqMXGZ8XRzBRsPQY3"}>
+    <AuthContext.Provider value={memoedValue}>
       {children}
     </AuthContext.Provider>
+    </Auth0Provider>
   )
 }
 

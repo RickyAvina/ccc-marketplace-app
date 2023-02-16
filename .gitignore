@@ -200,4 +200,7 @@ buck-out/
 web-build/
 dist/
 
+# client secrets
+env.json
+
 # @end expo-cli
