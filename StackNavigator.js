@@ -10,11 +10,12 @@ import HomeScreen from './screens/HomeScreen';
 import PaymentsScreen from './screens/PaymentsScreen';
 import AccountScreen from './screens/AccountScreen';
 import PasswordDetailsScreen from './screens/PasswordDetailsScreen';
+import useAuth from './hooks/useAuth';
 
 const Stack = createNativeStackNavigator();
 
 const StackNavigator = () => {
-  const user = null;
+  const {user} = useAuth();
 
   return (
     <Stack.Navigator

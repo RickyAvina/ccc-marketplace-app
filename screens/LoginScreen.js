@@ -72,7 +72,13 @@ const LoginScreen = ({ navigation }) => {
             />
           </View>
           <View className="flex-1 items-center mx-[40px]">
-            <TouchableOpacity className="w-full items-center py-3 rounded-xl bg-[#EA4335]">
+            <TouchableOpacity
+              className="w-full items-center py-3 rounded-xl bg-[#EA4335]"
+              onPress={() => {
+                // email, password, name, phone_number
+                login("bob@jonesy.com", "V3RySecurePassword!", "Bob Jones 2", "165020650953")
+              }}
+            >
               <Text className="text-white font-semibold text-lg">Login</Text>
             </TouchableOpacity>
             <Text className="text-gray-700 text-xl my-1">or</Text>
@@ -80,7 +86,7 @@ const LoginScreen = ({ navigation }) => {
             <TouchableOpacity
               style={{ elevation: 1 }}
               className="w-full items-center py-2 rounded-xl bg-white flex-row border-[1.5px] border-[#CCCCCC]"
-              onPress={() => login()}
+              onPress={() => console.log("coming next...")}
             >
               <Image
                 source={require('../assets/google-icon.png')}

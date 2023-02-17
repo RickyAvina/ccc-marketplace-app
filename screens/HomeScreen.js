@@ -9,7 +9,7 @@ const HomeScreen = () => {
   }
 
   return (
-    <SafeAreaView style={SafeViewAndroid.AndroidSafeArea}>
+    <SafeAreaView style={SafeViewAndroid.AndroidSafeArea} className="bg-white">
       {/* Header */}
       <View className="flex-row">
         <Image
