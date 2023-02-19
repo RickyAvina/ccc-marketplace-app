@@ -2,14 +2,17 @@ import { View, Text, ImageBackground, Image, TextInput, StyleSheet, TouchableOpa
 import React, { useRef } from 'react'
 import SafeViewAndroid from '../components/SafeViewAndroid'
 import PhoneInput from 'react-native-phone-number-input'
+import useAuth from '../hooks/useAuth'
 
 
 const RegisterScreen = ({navigation}) => {
   const [name, setName] = React.useState('')
   const [number, setNumber] = React.useState('')
+  const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
   const [confirmPassword, setConfirmPassword] = React.useState('')
   const phoneInput = useRef(null);
+  const { register } = useAuth();
   
   return (
     <View className="flex-1 bg-white">
@@ -39,6 +42,12 @@ const RegisterScreen = ({navigation}) => {
             onChangeText={setName}
             className=" text-xl pb-2 border-[#EA4335] border-b-2 pl-2"
             placeholder='Name'
+          />
+          <TextInput
+            value={email}
+            onChangeText={setEmail}
+            className=" text-xl pb-2 border-[#EA4335] border-b-2 pl-2"
+            placeholder='email'
           />
           <View className="border-[#EA4335] border-b-2">
           <PhoneInput
@@ -84,7 +93,11 @@ const RegisterScreen = ({navigation}) => {
           />
         </View>
         <View className="flex-1 items-center mx-[40px]">
-          <TouchableOpacity className="w-full items-center py-3 rounded-xl bg-[#EA4335]">
+          <TouchableOpacity
+            className="w-full items-center py-3 rounded-xl bg-[#EA4335]"
+            onPress={()=> {register(email, password, name, number);}}
+            >
+              {/* email, password, name, phone_numbe */}
             <Text className="text-white font-semibold text-lg">Create an account</Text>
           </TouchableOpacity>
           <Text className="text-gray-700 text-xl my-1">or</Text>
