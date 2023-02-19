@@ -6,7 +6,11 @@ const HomeScreenItem = (props) => {
   const navigation = useNavigation();
 
   return (
-    <TouchableOpacity className="flex-1 mx-2" onPress={()=> {navigation.navigate(props.dest)}}>
+    <TouchableOpacity
+      disabled={(props.dest == undefined || props.dest == null)}
+      className="flex-1 mx-2"
+      onPress={() => {navigation.navigate(props.dest)}}
+    >
       {props && 
       <ImageBackground
         source={props.image}
