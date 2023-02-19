@@ -11,6 +11,7 @@ import PaymentsScreen from './screens/PaymentsScreen';
 import AccountScreen from './screens/AccountScreen';
 import PasswordDetailsScreen from './screens/PasswordDetailsScreen';
 import useAuth from './hooks/useAuth';
+import LottieLoader from './screens/LottieLoader';
 
 const Stack = createNativeStackNavigator();
 
@@ -41,6 +42,7 @@ const StackNavigator = () => {
         </>
       ) : (
         <Stack.Group>
+          {/* <Stack.Screen name="LottieLoader" component={LottieLoader} /> */}
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Register" component={RegisterScreen} />
         </Stack.Group>
