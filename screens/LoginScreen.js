@@ -39,7 +39,7 @@ const LoginScreen = ({ navigation }) => {
       >
       </ImageBackground>
       {/* Logo  */}
-      <View className="absolute left-[20px] top-[40]">
+      <View className="absolute left-[20px]">
         <Image
           source={require('../assets/ccc-logo.png')}
           className="w-40 h-40"
@@ -81,31 +81,7 @@ const LoginScreen = ({ navigation }) => {
             >
               <Text className="text-white font-semibold text-lg">Login</Text>
             </TouchableOpacity>
-            <Text className="text-gray-700 text-xl my-1">or</Text>
-            {/* Sign in with Google */}
-            <TouchableOpacity
-              style={{ elevation: 1 }}
-              className="w-full items-center py-2 rounded-xl bg-white flex-row border-[1.5px] border-[#CCCCCC]"
-              onPress={() => console.log("coming next...")}
-            >
-              <Image
-                source={require('../assets/google-icon.png')}
-                className="w-10 h-10 mx-3"
-              />
-              <Text className="text-black font-semibold text-lg">Sign in with Google</Text>
-
-              {/* <TouchableOpacity
-              style={{ elevation: 1 }}
-              className="w-full items-center py-2 rounded-xl bg-white flex-row border-[1.5px] border-[#CCCCCC]"
-              onPress={() => logout()}
-            >
-              <Image
-                source={require('../assets/google-icon.png')}
-                className="w-10 h-10 mx-3"
-              />
-              <Text className="text-black font-semibold text-lg">Sign out</Text>
-            </TouchableOpacity> */}
-            </TouchableOpacity>
+           
             <View className="flex-row mt-5">
               <Text style={{ fontSize: 15 }} className="font-medium">{"Don't have an account?"} </Text>
               <TouchableOpacity onPress={() => { navigation.navigate("Register") }}>

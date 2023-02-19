@@ -15,10 +15,10 @@ const RegisterScreen = ({navigation}) => {
   const { register } = useAuth();
   
   return (
-    <View className="flex-1 bg-white">
+    <View className="flex-1 bg-red-500">
       <ImageBackground
         resizeMode='cover'
-        className="flex-1 absolute top-0 w-full h-full ml-10"
+        className="flex-1 absolute top-[-10] w-full h-full ml-10"
         source={require('../assets/flower-bg-2.jpg')}
       >
       </ImageBackground>
@@ -100,14 +100,14 @@ const RegisterScreen = ({navigation}) => {
               {/* email, password, name, phone_numbe */}
             <Text className="text-white font-semibold text-lg">Create an account</Text>
           </TouchableOpacity>
-          <Text className="text-gray-700 text-xl my-1">or</Text>
+          {/* <Text className="text-gray-700 text-xl my-1">or</Text>
           <TouchableOpacity style={{elevation: 1}} className="w-full items-center py-2 rounded-xl bg-white flex-row border-[1.5px] border-[#CCCCCC] ">
             <Image
               source={require('../assets/google-icon.png')}
               className="w-10 h-10 mx-3"
             />
             <Text className="text-black font-semibold text-lg">Sign in with Google</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <View className="flex-row mt-5">
             <Text style={{fontSize: 15}} className="font-medium">Already have an account? </Text>
             <TouchableOpacity onPress={() => {navigation.navigate("Login")}}>

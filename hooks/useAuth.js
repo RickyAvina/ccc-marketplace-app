@@ -120,11 +120,9 @@ export const AuthProvider = ({ children }) => {
   }), [user, login, register, logout])
 
   return (
-    <Auth0Provider domain={"dev-86rvru3cjw5ztru0.us.auth0.com"} clientId={"Gwr6p98ErOSQtJXBqMXGZ8XRzBRsPQY3"}>
       <AuthContext.Provider value={memoedValue}>
         {children}
       </AuthContext.Provider>
-    </Auth0Provider>
   )
 }
 
