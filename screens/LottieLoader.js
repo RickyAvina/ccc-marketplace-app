@@ -6,6 +6,11 @@ import { useRef } from 'react';
 
 
 const LottieLoader = () => {
+  /* Loader icon
+   *
+   * Using "onLayout" due to this issue https://github.com/expo/expo/issues/16858#issuecomment-1237882579
+   */
+
   const animationRef = useRef(null);
 
   useEffect(() => {

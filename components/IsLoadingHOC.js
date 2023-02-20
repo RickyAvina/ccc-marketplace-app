@@ -4,7 +4,7 @@ import Lottie from 'lottie-react-native';
 import LottieLoader from '../screens/LottieLoader';
 
 
-const IsLoadingHOC = (WrappedComponent, loadingMesage) => {
+const IsLoadingHOC = (WrappedComponent) => {
   function HOC(props) {
     const [isLoading, setLoading] = useState(true);
     const [error, setError] = useState(null);

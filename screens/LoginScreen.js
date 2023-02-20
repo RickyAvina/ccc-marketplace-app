@@ -3,33 +3,23 @@ import React, { useRef } from 'react'
 import SafeViewAndroid from '../components/SafeViewAndroid'
 import PhoneInput from 'react-native-phone-number-input'
 import useAuth from '../hooks/useAuth'
+import IsLoadingHOC from '../components/IsLoadingHOC'
+import { useEffect } from 'react'
 
 
-const LoginScreen = ({ navigation }) => {
+const LoginScreen = ({ navigation, setLoading, setError }) => {
   const [name, setName] = React.useState('')
   const [number, setNumber] = React.useState('')
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
   const [confirmPassword, setConfirmPassword] = React.useState('')
-  const phoneInput = useRef(null);
+  const phoneInput = useRef(null);  
+  const { login } = useAuth();
 
-  const [loading, setLoading] = React.useState(false); 
-  
-  const { login, logout } = useAuth();
+  useEffect(() => {
+    setLoading(false);
+  }, []);
 
-  const handleLogin = async () => {
-    const success = await login(email, password);
-
-    if (!success) {
-      console.log("FAILURE")
-      Alert.alert('Login Unsuccessful', '', [
-        {text: 'OK', onPress: () => {}},
-      ]);
-    } else {
-      console.log("Successfully logged in with " + email)
-    }
-  }
-  
   return (
     <View className="flex-1 bg-white">
       <ImageBackground
@@ -71,9 +61,16 @@ const LoginScreen = ({ navigation }) => {
             {/* Login Button */}
             <TouchableOpacity
               className="w-full items-center py-3 rounded-xl bg-[#EA4335]"
-              onPress={() => {
+              onPress={async () => {
                 // email, password, name, phone_number
-                handleLogin(email, password)
+                try {
+                  setLoading(true);
+                  await login(email, password);
+                } catch (err) {
+                  setError(err);
+                } finally {
+                  setLoading(false);
+                }
                 // login()
                 // login("bob@jonesy.com", "V3RySecurePassword!")
                 // login("bob@jonesy.com", "V3RySecurePassword!", "Bob Jones 2", "165020650953")
@@ -96,7 +93,4 @@ const LoginScreen = ({ navigation }) => {
 }
 
 
-
-
-
-export default LoginScreen
+export default IsLoadingHOC(LoginScreen)

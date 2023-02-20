@@ -138,4 +138,4 @@ const RegisterScreen = ({navigation, setLoading, setError}) => {
   )
 }
 
-export default IsLoadingHOC(RegisterScreen, "loading message");
+export default IsLoadingHOC(RegisterScreen);

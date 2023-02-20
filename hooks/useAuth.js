@@ -6,16 +6,17 @@ import { useMemo } from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useContext } from 'react';
-import { useAuth0, Auth0Provider } from 'react-native-auth0';
+import { useAuth0 } from 'react-native-auth0';
 import { AsyncStorage } from 'react-native';
 
-
 const AuthContext = createContext({});
+
+// cr7@mail.com, P3ssiTrash!
 
 export const AuthProvider = ({ children }) => {
   const { authorize, clearSession, authedUser } = useAuth0();
   const [user, setUser] = useState(null);
-  const AWSURL = "https://ky3czg4fza.execute-api.us-east-1.amazonaws.com/Prod";
+  const AWSURL = "https://ajhglglol7.execute-api.us-east-1.amazonaws.com/Prod/";
 
   useEffect(() => {
     const setCachedUser = async () => {
@@ -40,41 +41,28 @@ export const AuthProvider = ({ children }) => {
   }
 
   const login = async (email, password) => {
-    // Returns true if login was successful, false otherwise
     // Documentation: https://auth0.com/docs/get-started/authentication-and-authorization-flow/call-your-api-using-resource-owner-password-flow
+    const formData = JSON.stringify({ username: email, password});
 
-    const body = `grant_type=password&username=${email}&password=${password}&audience=https://dev-86rvru3cjw5ztru0.us.auth0.com/api/v2/&scope=email&client_id=Gwr6p98ErOSQtJXBqMXGZ8XRzBRsPQY3&client_secret=ARxNu23OgnnISH_5Yl6BrAS6ouX2zrwbITDbgaACd3lnjmP2heV4TRjiMObyyYIE`
-
-    const response = await fetch('https://dev-86rvru3cjw5ztru0.us.auth0.com/oauth/token', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/x-www-form-urlencoded'
-      },
-      body: body
-    });
-
-    const data = response.json()
-
-    if (!response.ok || response.error != null) {
-      console.error(data)
-      return false
-    }
-
-    // query DynamoDB for full user profile
-
-
-    // set user
-    const user =
-    {
-      id: 2,
-      name: "Name",
-      email: "Email",
-      phone_number: "Phone Number"
-
-    }
-
-    console.log(success)
-    return success
+    return new Promise((resolve, reject) => {
+      try {
+        sendXmlHttpRequest(AWSURL + "/login", formData)
+          .then(_user => {
+            console.log(_user)
+            // Set user (don't save access token for now)
+            const {access_token, ...u} = _user
+            setUserState(u);
+            resolve(_user);
+          })
+          .catch((err) => {
+            console.error(err)
+            reject("Error singing in");
+          });
+      } catch (error) {
+        console.error(error)
+        reject("Error signing in");
+      }
+    })
   }
 
   function sendXmlHttpRequest(endpoint, data) {
@@ -119,7 +107,7 @@ export const AuthProvider = ({ children }) => {
 
     return new Promise((resolve, reject) => {
       try {
-        sendXmlHttpRequest("https://ky3czg4fza.execute-api.us-east-1.amazonaws.com/Prod/create-user", formData)
+        sendXmlHttpRequest(AWSURL + "/create-user", formData)
           .then((_user) => {
             console.log("success!", _user);
             // set user
@@ -137,9 +125,10 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       await clearSession();
-      await AsyncStorage.setItem("user", null);
+      await AsyncStorage.removeItem("user");
+      setUser(null);
     } catch (e) {
-      console.log('Log out cancelled');
+      console.error('Log out cancelled, error: ' + e);
     }
   }
 

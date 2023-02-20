@@ -5,14 +5,22 @@ import { useNavigation } from '@react-navigation/native'
 import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import PhoneInput from 'react-native-phone-number-input'
+import useAuth from '../hooks/useAuth';
+import IsLoadingHOC from '../components/IsLoadingHOC';
+import { useEffect } from 'react';
 
 
-const AccountScreen = () => {
+const AccountScreen = ({setLoading, setError}) => {
   const navigation = useNavigation();
   const [name, setName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState('');
   const phoneInput = useRef(null);
   const [bio, setBio] = useState("");
+  const { logout } = useAuth();
+
+  useEffect(() => {
+    setLoading(false);
+  }, [])
 
   return (
     <ImageBackground
@@ -106,7 +114,15 @@ const AccountScreen = () => {
             </View>
 
             {/* Logout Button */}
-            <TouchableOpacity className="bg-[#FFE146] mx-20 items-center border-[1px] border-[#757575] mt-5 rounded-md">
+            <TouchableOpacity
+              className="bg-[#FFE146] mx-20 items-center border-[1px] border-[#757575] mt-5 rounded-md"
+              onPress={async () => {
+                // display loader
+                setLoading(true);
+                await logout();
+                setLoading(false);
+              }}
+            >
               <Text className="font-bold my-3 ">Logout</Text>
             </TouchableOpacity>
 
@@ -117,28 +133,5 @@ const AccountScreen = () => {
   )
 }
 
-export default AccountScreen
 
-
-     // <TouchableOpacity
-            //   className="flex-row justify-between items-center bg-red-500 p-4"
-            //   onPress={() => { navigation.navigate("AccountDetails") }}>
-            //   <Text className="text-lg">Account info</Text>
-            //   <AntDesign
-            //     name="rightcircleo"
-            //     className=""
-            //     size={24}
-            //     color="black" />
-            // </TouchableOpacity>
-
-            // {/* Payment Details */}
-            // <TouchableOpacity
-            //   className="flex-row justify-between items-center bg-red-500 p-4"
-            //   onPress={() => { navigation.navigate("AccountDetails") }}>
-            //   <Text className="text-lg">Account info</Text>
-            //   <AntDesign
-            //     name="rightcircleo"
-            //     className=""
-            //     size={24}
-            //     color="black" />
-            // </TouchableOpacity>
+export default IsLoadingHOC(AccountScreen);
