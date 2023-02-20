@@ -13,14 +13,13 @@ const IsLoadingHOC = (WrappedComponent) => {
       setLoading(isComponentLoading);
     };
 
-    const setErrorState = err => {
-      console.error(err);
-      setError(err);
+    const setErrorState = (title, subtext="") => {
+      setError({title, subtext});
     }
 
     return (
       <>
-        {(error != null) && Alert.alert(error, '', [
+        {(error != null) && Alert.alert(error.title, error.subtext ?? "", [
           {
             text: 'OK',
             onPress: () => {

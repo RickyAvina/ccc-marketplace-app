@@ -12,15 +12,49 @@ import { useEffect } from 'react';
 
 const AccountScreen = ({setLoading, setError}) => {
   const navigation = useNavigation();
-  const [name, setName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const { user, logout } = useAuth();
+
+  const [name, setName] = useState(user.name);
+  const [phoneNumber, setPhoneNumber] = useState(user.phone_number);
   const phoneInput = useRef(null);
-  const [bio, setBio] = useState("");
-  const { logout } = useAuth();
+  const [bio, setBio] = useState(user.bio);
 
   useEffect(() => {
     setLoading(false);
+    console.log(user);
   }, [])
+
+  async function sendChangePasswordEmail() {
+    const body = {
+      client_id: "Gwr6p98ErOSQtJXBqMXGZ8XRzBRsPQY3",
+      email: user.email,
+      connection: "Username-Password-Authentication"
+    }
+
+    // TODO: Check to see if user exists before sending this request 
+    const result = await fetch("https://dev-86rvru3cjw5ztru0.us.auth0.com/dbconnections/change_password", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body)
+    })
+    .catch((error) => {
+      setError(error);
+      return false;
+    })
+
+    if (!result.ok) {
+      setError("Error sending reset password email")
+      return false;
+    }
+
+    // Not an error, just a message
+    // logout
+    setError("Successfully sent reset password email, check your inbox.", "If you do not see an email, please check your spam.")
+    logout();
+    return true;
+  }
 
   return (
     <ImageBackground
@@ -44,7 +78,7 @@ const AccountScreen = ({setLoading, setError}) => {
               source={{ uri: "https://reactnative.dev/img/tiny_logo.png" }}
               className="w-[50px] h-[50px] rounded-full"
             />
-            <Text className="text-xl font-semibold">Andrea M.</Text>
+            <Text className="text-xl font-semibold">{user.name ?? "User"}</Text>
           </View>
           <Text className="text-[#3897F0] font-semibold">Change Profile Picture</Text>
         </View>
@@ -88,18 +122,6 @@ const AccountScreen = ({setLoading, setError}) => {
               />
             </View>
 
-            {/* Password Field */}
-            <TouchableOpacity
-              className="flex-row justify-between border-b-[1px] border-[#747474] items-center p-2"
-              onPress={() => { navigation.navigate("PasswordDetails") }}>
-              <Text className="text-[#747474]">Password</Text>
-              <AntDesign
-                name="rightcircleo"
-                className=""
-                size={24}
-                color="#747474" />
-            </TouchableOpacity>
-
             {/* Bio  */}
             <View className="border-b-[1px] border-[#747474]">
               <TextInput
@@ -113,18 +135,45 @@ const AccountScreen = ({setLoading, setError}) => {
               />
             </View>
 
-            {/* Logout Button */}
-            <TouchableOpacity
-              className="bg-[#FFE146] mx-20 items-center border-[1px] border-[#757575] mt-5 rounded-md"
-              onPress={async () => {
-                // display loader
-                setLoading(true);
-                await logout();
-                setLoading(false);
-              }}
-            >
-              <Text className="font-bold my-3 ">Logout</Text>
-            </TouchableOpacity>
+            {/* Buttons */}
+            <View className="space-y-3 mt-3">
+              {/* Save Button */}
+              <TouchableOpacity
+                className="bg-[#FFE146] mx-20 items-center border-[1px] border-[#757575] rounded-md"
+                onPress={async () => {
+                  // save
+                }}
+              >
+                <Text className="font-bold my-3 ">Save Profile</Text>
+              </TouchableOpacity>
+              
+              {/* Change Password Button */}
+              <TouchableOpacity
+                className="bg-[#FFE146] mx-20 items-center border-[1px] border-[#757575] rounded-md"
+                onPress={async () => {
+                  // save
+                  setLoading(true);
+                  await sendChangePasswordEmail();
+                  setLoading(false);
+                }}
+              >
+                <Text className="font-bold my-3 text-center">Send Change Password Email</Text>
+              </TouchableOpacity>
+
+              {/* Logout Button */}
+              <TouchableOpacity
+                className="bg-[#FFE146] mx-20 items-center border-[1px] border-[#757575] rounded-md"
+                onPress={async () => {
+                  // display loader
+                  setLoading(true);
+                  await logout();
+                  setLoading(false);
+                }}
+              >
+                <Text className="font-bold my-3 ">Logout</Text>
+              </TouchableOpacity>
+              
+            </View>
 
           </View>
         </View>
