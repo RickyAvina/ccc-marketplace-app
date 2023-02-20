@@ -11,8 +11,6 @@ import { AsyncStorage } from 'react-native';
 
 const AuthContext = createContext({});
 
-// cr7@mail.com, P3ssiTrash!
-
 export const AuthProvider = ({ children }) => {
   const { authorize, clearSession, authedUser } = useAuth0();
   const [user, setUser] = useState(null);
@@ -95,10 +93,8 @@ export const AuthProvider = ({ children }) => {
     // Run using npx react-native run-android      
 
     const body = {
-      client_id: "IiFlcfW3cILDV65BrUepNXygMpAyRJfq",
       email: email,
       password: password,
-      connection: "Username-Password-Authentication",
       name: name,
       phone_number: phone_number
     }
