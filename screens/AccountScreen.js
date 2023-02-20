@@ -10,6 +10,42 @@ import IsLoadingHOC from '../components/IsLoadingHOC';
 import { useEffect } from 'react';
 
 
+export async function sendChangePasswordEmail(email, setError, logout) {
+  const body = {
+    client_id: "Gwr6p98ErOSQtJXBqMXGZ8XRzBRsPQY3",
+    email: email,
+    connection: "Username-Password-Authentication"
+  }
+
+  // TODO: Check to see if user exists before sending this request 
+  const result = await fetch("https://dev-86rvru3cjw5ztru0.us.auth0.com/dbconnections/change_password", {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body)
+  })
+  .catch((error) => {
+    setError(error);
+    return false;
+  })
+
+  if (!result.ok) {
+    setError("Error sending reset password email")
+    return false;
+  }
+
+  // Not an error, just a message
+  setError("Successfully sent reset password email, check your inbox.", "If you do not see an email, please check your spam.")
+  
+  // logout if resetting password from accounts screen 
+  if (logout !== null && logout !== undefined) {
+    logout();
+  }
+  return true;
+}
+
+
 const AccountScreen = ({setLoading, setError}) => {
   const navigation = useNavigation();
   const { user, logout } = useAuth();
@@ -24,37 +60,6 @@ const AccountScreen = ({setLoading, setError}) => {
     console.log(user);
   }, [])
 
-  async function sendChangePasswordEmail() {
-    const body = {
-      client_id: "Gwr6p98ErOSQtJXBqMXGZ8XRzBRsPQY3",
-      email: user.email,
-      connection: "Username-Password-Authentication"
-    }
-
-    // TODO: Check to see if user exists before sending this request 
-    const result = await fetch("https://dev-86rvru3cjw5ztru0.us.auth0.com/dbconnections/change_password", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body)
-    })
-    .catch((error) => {
-      setError(error);
-      return false;
-    })
-
-    if (!result.ok) {
-      setError("Error sending reset password email")
-      return false;
-    }
-
-    // Not an error, just a message
-    // logout
-    setError("Successfully sent reset password email, check your inbox.", "If you do not see an email, please check your spam.")
-    logout();
-    return true;
-  }
 
   return (
     <ImageBackground
@@ -153,7 +158,7 @@ const AccountScreen = ({setLoading, setError}) => {
                 onPress={async () => {
                   // save
                   setLoading(true);
-                  await sendChangePasswordEmail();
+                  await sendChangePasswordEmail(user.email, setError, logout);
                   setLoading(false);
                 }}
               >

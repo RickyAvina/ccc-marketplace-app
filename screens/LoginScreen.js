@@ -13,7 +13,7 @@ const LoginScreen = ({ navigation, setLoading, setError }) => {
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
   const [confirmPassword, setConfirmPassword] = React.useState('')
-  const phoneInput = useRef(null);  
+  const phoneInput = useRef(null);
   const { login } = useAuth();
 
   useEffect(() => {
@@ -43,7 +43,7 @@ const LoginScreen = ({ navigation, setLoading, setError }) => {
           <Text className="font-semibold text-4xl text-[#EA4335]">Login</Text>
           <Text className="text-lg text-[#787878]">{"Welcome back. We missed you."}</Text>
           <View className="pt-5 mx-10 mb-10">
-          <TextInput
+            <TextInput
               value={email}
               onChangeText={setEmail}
               className="text-xl pb-2 border-[#EA4335] border-b-2 pl-2 py-2"
@@ -71,18 +71,24 @@ const LoginScreen = ({ navigation, setLoading, setError }) => {
                 } finally {
                   setLoading(false);
                 }
-                // login()
-                // login("bob@jonesy.com", "V3RySecurePassword!")
-                // login("bob@jonesy.com", "V3RySecurePassword!", "Bob Jones 2", "165020650953")
               }}
             >
               <Text className="text-white font-semibold text-lg">Login</Text>
             </TouchableOpacity>
-           
+
+            {/* Don't have an account? */}
             <View className="flex-row mt-5">
               <Text style={{ fontSize: 15 }} className="font-medium">{"Don't have an account?"} </Text>
               <TouchableOpacity onPress={() => { navigation.navigate("Register") }}>
                 <Text style={{ fontSize: 15 }} className="text-[#35BAD8]">Register Here</Text>
+              </TouchableOpacity>
+            </View>
+
+            {/* Forgot password? */}
+            <View className="flex-row mt-3">
+              <Text style={{ fontSize: 15 }} className="font-medium">Forgot your password? </Text>
+              <TouchableOpacity onPress={() => { navigation.navigate("ForgotPassword") }}>
+                <Text style={{ fontSize: 15 }} className="text-[#35BAD8]">Click Here</Text>
               </TouchableOpacity>
             </View>
           </View>

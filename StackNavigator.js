@@ -10,11 +10,12 @@ import PaymentsScreen from './screens/PaymentsScreen';
 import AccountScreen from './screens/AccountScreen';
 import PasswordDetailsScreen from './screens/PasswordDetailsScreen';
 import useAuth from './hooks/useAuth';
+import ForgotPasswordScreen from './screens/ForgotPasswordScreen';
 
 const Stack = createNativeStackNavigator();
 
 const StackNavigator = () => {
-  const {user} = useAuth();
+  const {user } = useAuth();
 
   return (
     <Stack.Navigator
@@ -42,6 +43,7 @@ const StackNavigator = () => {
         <Stack.Group>
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Register" component={RegisterScreen} />
+          <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
         </Stack.Group>
       )}
 
