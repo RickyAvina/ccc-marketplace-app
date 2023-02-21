@@ -7,8 +7,6 @@ import * as ImagePicker from 'expo-image-picker';
 import { data } from '../photoData'
 import { Ionicons } from '@expo/vector-icons';
 
-
-
 const DesignsScreen = ({route, navigation}) => {
   
   if (route != null && route.params != null) {
@@ -24,15 +22,25 @@ const DesignsScreen = ({route, navigation}) => {
   }
 
   const addPhoto = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-  
-    if (!result.canceled) {
-      navigation.navigate('AddPostModal', { uri: result.assets[0].uri })
+    try {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+
+      const _file = result.assets[0];
+      
+      if (!result.canceled) {
+        navigation.navigate('AddPostModal', { 
+          uri: _file.uri,
+          fileName: _file.fileName ,
+          type: _file.type
+        })
+      }
+    } catch (e) {
+      console.error(e);
     }
   }
   
