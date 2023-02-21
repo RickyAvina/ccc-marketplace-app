@@ -3,10 +3,7 @@ import React, { useEffect } from 'react'
 import { Foundation } from '@expo/vector-icons';
 // import { RNS3 } from 'react-native-aws3';
 import useAuth from '../hooks/useAuth';
-import AWS from "aws-sdk"
-import fs from 'react-native-fs'
-import * as mime from 'react-native-mime-types';
-import { Buffer } from "buffer";
+import { UploadFile } from '../components/UploadFile'
 
 
 const env = require("../env.json");
@@ -32,12 +29,6 @@ const AddPostModalScreen = ({ route, navigation }) => {
     }
   }
 
-  const s3Bucket = new AWS.S3({
-    accessKeyId: env.awsAccessKey,
-    secretAccessKey: env.awsSecretAccessKey,
-    Bucket: 'image-blobs',
-    signatureVersion: 'v4'
-  });
 
   const getMimeType = (type) => {
     switch (type) {
@@ -50,96 +41,7 @@ const AddPostModalScreen = ({ route, navigation }) => {
     }
   }
 
-  const uploadFile = async () => {
-    try {
-      if (uri == undefined || uri == null || uri.length == 0) {
-        Alert.alert('Please select image first');
-        return;
-      }
-
-      const base64 = await fs.readFile(uri, 'base64');
-      const contentType = mime.lookup(uri);
-      const fn = fileName || Math.random().toString(36).slice(2);
-      const contentDisposition = 'inline;filename=' + fn + '"';
-
-      // console.log(Base)
-      // const arrayBuffer = Base64Binary.decode(base64);
-      const arrayBuffer = Buffer.from(base64, 'base64');
-      
-      const params = {
-        Bucket: 'image-blobs/posts',
-        Key: `${user.id}/${fn}`,
-        Body: arrayBuffer,
-        ContentDisposition: contentDisposition,
-        ContentType: contentType
-      }
-
-      s3Bucket.upload(params, (err, data) => {
-        if (err) {
-          console.error(err);
-        } else {
-          console.log("Success!" + JSON.stringify(data));
-        }
-      });
-
-      // const s3_obj = {
-      //   uri,
-      //   keyPrefix: `posts/${user.id}/`,
-      //   name: fileName ?? uri.split("/").pop(),
-      //   type: getMimeType(type)
-      // }
-
-      
-
-      return;
-
-      s3Bucket.upload()
-
-      await RNS3.put(
-        {
-          // `uri` is a file system path (i.e. file://)
-          uri: s3_obj.uri,
-          name: s3_obj.name,
-          type: s3_obj.type,  // MIME type, ie. image/jpeg
-        },
-        {
-          keyPrefix: s3_obj.keyPrefix, //  posts/user_id/
-          bucket: 'image-blobs', 
-          region: 'us-east-1', 
-          accessKey: env.awsAccessKey,
-          secretKey: env.awsSecretAccessKey,
-          successActionStatus: 201,
-        },
-      )
-      .progress((progress) => { console.log("Progress: " + JSON.stringify(progress)) })
-      .then((response) => {
-        if (response.status !== 201)
-          Alert.alert('Failed to upload image to S3');
-        console.log("SUCECSS uploading", response.body);
-        let {
-          bucket,
-          etag,
-          key,
-          location
-        } = response.body.postResponse;
-
-        console.log(bucket, etag, key, location);
-        /**
-         * {
-         *   postResponse: {
-         *     bucket: "your-bucket",
-         *     etag : "9f620878e06d28774406017480a59fd4",
-         *     key: "uploads/image.png",
-         *     location: "https://bucket.s3.amazonaws.com/**.png"
-         *   }
-         * }
-         */
-      }).catch(console.error);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
+  
   return (
     <View className="flex-1 items-center justify-start bg-[#14141A]">
       <View className="flex-row w-full justify-between items-center p-4">
@@ -148,7 +50,9 @@ const AddPostModalScreen = ({ route, navigation }) => {
         </TouchableOpacity>
         <Text className="text-white font-bold text-lg ml-[20px]">New Post</Text>
         <TouchableOpacity onPress={async () => {
-          await uploadFile();
+          try {
+            await UploadFile(uri, user);
+          } catch (err) { console.error(err); }
           // navigation.navigate("Home", prepareProps())
         }}>
           <Text className="text-[#00A1B7] font-semibold text-lg">Next</Text>
