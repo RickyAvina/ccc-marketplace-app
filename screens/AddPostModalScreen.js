@@ -3,12 +3,13 @@ import React, { useEffect } from 'react'
 import { Foundation } from '@expo/vector-icons';
 // import { RNS3 } from 'react-native-aws3';
 import useAuth from '../hooks/useAuth';
-import { UploadFile } from '../components/UploadFile'
+import { UploadFile } from '../components/S3Util'
+import IsLoadingHOC from '../components/IsLoadingHOC';
 
 
 const env = require("../env.json");
 
-const AddPostModalScreen = ({ route, navigation }) => {
+const AddPostModalScreen = ({ route, navigation, setLoading, setError }) => {
   // const [image, setImage] = React.useState(route.params.uri)
   const { uri, fileName, type } = route.params;
   const [inspiration, setInspiration] = React.useState("")
@@ -29,18 +30,20 @@ const AddPostModalScreen = ({ route, navigation }) => {
     }
   }
 
+  useEffect(() => {
+    setLoading(false);
+  }, [])
 
-  const getMimeType = (type) => {
-    switch (type) {
-      case "image":
-        return "image/jpeg";
-      case "video":
-        return "video/mp4";
-      default:
-        throw new Error("Unknown mime type for type " + type);
+  const createPost = async (uri, user_id) => {
+    // delegate error handling to higher level
+
+    const fileLoc = await UploadFile(uri, user_id); // upload file to S3, get key (user_id/fileName),
+    const body = {
+      user_id,
     }
-  }
 
+    // Send req to AWS lambda
+  }
   
   return (
     <View className="flex-1 items-center justify-start bg-[#14141A]">
@@ -50,9 +53,14 @@ const AddPostModalScreen = ({ route, navigation }) => {
         </TouchableOpacity>
         <Text className="text-white font-bold text-lg ml-[20px]">New Post</Text>
         <TouchableOpacity onPress={async () => {
+          setLoading(true);
           try {
-            await UploadFile(uri, user);
-          } catch (err) { console.error(err); }
+            const fileLoc = await UploadFile(uri, user.id); // upload file to S3, get location
+          } catch (err) {
+            setError(err);
+          } finally {
+            setLoading(false);
+          }
           // navigation.navigate("Home", prepareProps())
         }}>
           <Text className="text-[#00A1B7] font-semibold text-lg">Next</Text>
@@ -110,4 +118,4 @@ const AddPostModalScreen = ({ route, navigation }) => {
 
 // 247 247 245
 
-export default AddPostModalScreen
+export default IsLoadingHOC(AddPostModalScreen);
