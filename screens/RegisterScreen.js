@@ -15,6 +15,31 @@ const RegisterScreen = ({navigation, setLoading, setError}) => {
   const phoneInput = useRef(null);
   const { register } = useAuth();
   
+  /*
+      const errorStates = {
+    name: {
+      state: useState(true),
+      rule: "Name must be non-empty",
+    },
+    number: {
+      state: useState(true),
+      rule: "Phone number must be non-empty and contain only numbers"
+    },
+    email: {
+      state: useState(true),
+      rule: "email must be of the format user@email.com"
+    },
+    password: {
+      state: useState(true),
+      rule: "Password must be >8 character in length, and contain uppercase letters, lowercase letters, and numbers."
+    },
+    confirmPassword: {
+      state: useState(true),
+      rule: "Both passwords must match"
+    }
+  }
+  */
+ 
   useEffect(() => {
     setLoading(false);
   }, []);

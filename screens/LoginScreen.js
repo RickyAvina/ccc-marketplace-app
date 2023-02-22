@@ -5,16 +5,54 @@ import PhoneInput from 'react-native-phone-number-input'
 import useAuth from '../hooks/useAuth'
 import IsLoadingHOC from '../components/IsLoadingHOC'
 import { useEffect } from 'react'
+import { useState } from 'react'
 
 
 const LoginScreen = ({ navigation, setLoading, setError }) => {
-  const [name, setName] = React.useState('')
-  const [number, setNumber] = React.useState('')
-  const [email, setEmail] = React.useState('')
-  const [password, setPassword] = React.useState('')
-  const [confirmPassword, setConfirmPassword] = React.useState('')
+  const [name, setName] = useState('')
+  const [number, setNumber] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
   const phoneInput = useRef(null);
   const { login } = useAuth();
+
+  const validator = require('validator');
+  const passwordRegex = new RegExp(/^(?=.*?\d)(?=.*?[a-z])(?=.*?[A-Z]).{8,}$/)
+
+  // name -> [value, setValue]
+  //
+  
+  const errorStates = {
+    email: {
+      state: useState(true),
+      rule: "email must be of the format user@email.com"
+    },
+    password: {
+      state: useState(true),
+      rule: "Password must be >8 character in length, and contain uppercase letters, lowercase letters, and numbers."
+    },
+  }
+
+  const inputInvalid = Object.values(errorStates)
+    .map(obj => obj.state[0])
+    .some(error => error == true);
+
+  const getErrorString = () => {
+    let err = ""
+    for (const [field, obj] of Object.entries(errorStates)) {
+      if (obj.state[0]) {
+        err += "•" + obj.rule + "\n"
+      }
+    }
+
+    if (err.length > 0 && err.slice(-1) == "\n") {
+      err = err.slice(0, -1);
+    }
+
+    return err;
+  }
+
 
   useEffect(() => {
     setLoading(false);
@@ -45,14 +83,27 @@ const LoginScreen = ({ navigation, setLoading, setError }) => {
           <View className="pt-5 mx-10 mb-10">
             <TextInput
               value={email}
-              onChangeText={setEmail}
+              onChangeText={(val) => {
+                // email validation
+                val = val.toLowerCase().trim();
+
+                errorStates.email.state[1](!validator.isEmail(val));
+                setEmail(val)
+              }}
               className="text-xl pb-2 border-[#EA4335] border-b-2 pl-2 py-2"
               placeholder='Email'
             />
             <TextInput
               value={password}
               secureTextEntry={true}
-              onChangeText={setPassword}
+              onChangeText={(val) => {
+                // password must be 8+ characters and contain upper lower AND numbers
+                val = val.trim();
+
+                // set error state if password is not valid
+                errorStates.password.state[1](!passwordRegex.test(val));
+                setPassword(val);
+              }}
               className="text-xl pb-2 border-[#EA4335] border-b-2 pl-2 py-2"
               placeholder='Password'
             />
@@ -60,16 +111,20 @@ const LoginScreen = ({ navigation, setLoading, setError }) => {
           <View className="flex-1 items-center mx-[40px]">
             {/* Login Button */}
             <TouchableOpacity
-              className="w-full items-center py-3 rounded-xl bg-[#EA4335]"
+              className={`w-full items-center py-3 rounded-xl ${inputInvalid ? "bg-[#CDCDCD]" : "bg-[#EA4335]"}`}
               onPress={async () => {
-                // email, password, name, phone_number
-                try {
-                  setLoading(true);
-                  await login(email, password);
-                } catch (err) {
-                  setError(err);
-                } finally {
-                  setLoading(false);
+                if (inputInvalid) {
+                  setError("Error logging in", getErrorString());
+                } else {
+                  // email, password, name, phone_number
+                  try {
+                    setLoading(true);
+                    await login(email, password);
+                  } catch (err) {
+                    setError(err);
+                  } finally {
+                    setLoading(false);
+                  }
                 }
               }}
             >
@@ -98,5 +153,15 @@ const LoginScreen = ({ navigation, setLoading, setError }) => {
   )
 }
 
+
+
+/*
+ * [Fields] -> [Field states]
+  <>
+    <el>
+    <el>
+    <button disabled={!valid} />
+  <>
+*/
 
 export default IsLoadingHOC(LoginScreen)

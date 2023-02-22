@@ -41,6 +41,7 @@ const DesignsScreen = ({route, navigation}) => {
       }
     } catch (e) {
       console.error(e);
+      return;
     }
   }
   
