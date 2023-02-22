@@ -19,9 +19,6 @@ const LoginScreen = ({ navigation, setLoading, setError }) => {
 
   const validator = require('validator');
   const passwordRegex = new RegExp(/^(?=.*?\d)(?=.*?[a-z])(?=.*?[A-Z]).{8,}$/)
-
-  // name -> [value, setValue]
-  //
   
   const errorStates = {
     email: {
