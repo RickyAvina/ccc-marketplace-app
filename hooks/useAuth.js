@@ -11,10 +11,32 @@ import { AsyncStorage } from 'react-native';
 
 const AuthContext = createContext({});
 
+export const AWSURL = "https://ajhglglol7.execute-api.us-east-1.amazonaws.com/Prod/";
+export function sendXmlHttpRequest(endpoint, data) {
+  const xhr = new XMLHttpRequest();
+
+  return new Promise((resolve, reject) => {
+    xhr.onreadystatechange = e => {
+      if (xhr.readyState !== 4) {
+        return;
+      }
+
+      if (xhr.status === 200) {
+        resolve(JSON.parse(xhr.responseText));
+      } else {
+        reject(xhr.responseText);
+      }
+    };
+
+    xhr.open("POST", endpoint);
+    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhr.send(data);
+  });
+}
+
 export const AuthProvider = ({ children }) => {
   const { authorize, clearSession, authedUser } = useAuth0();
   const [user, setUser] = useState(null);
-  const AWSURL = "https://ajhglglol7.execute-api.us-east-1.amazonaws.com/Prod/";
 
   useEffect(() => {
     const setCachedUser = async () => {
@@ -54,7 +76,7 @@ export const AuthProvider = ({ children }) => {
           })
           .catch((err) => {
             console.error(err)
-            reject("Error singing in");
+            reject("Incorrect login");
           });
       } catch (error) {
         console.error(error)
@@ -63,27 +85,6 @@ export const AuthProvider = ({ children }) => {
     })
   }
 
-  function sendXmlHttpRequest(endpoint, data) {
-    const xhr = new XMLHttpRequest();
-
-    return new Promise((resolve, reject) => {
-      xhr.onreadystatechange = e => {
-        if (xhr.readyState !== 4) {
-          return;
-        }
-
-        if (xhr.status === 200) {
-          resolve(JSON.parse(xhr.responseText));
-        } else {
-          reject(xhr.responseText);
-        }
-      };
-
-      xhr.open("POST", endpoint);
-      xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-      xhr.send(data);
-    });
-  }
 
   const register = async (email, password, name, phone_number, bio = "") => {
     // Send POST request to https://dev-86rvru3cjw5ztru0.us.auth0.com/dbconnections/signup

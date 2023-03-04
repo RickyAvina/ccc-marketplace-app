@@ -39,7 +39,6 @@ export const UploadFile = async (uri, user_id) => {
   }
 
   const uploadResult = await s3Bucket.upload(params).promise();
-  console.log("succesfully uploaded at",uploadResult.Location);
   return fileKey;
 
 }

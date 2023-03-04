@@ -2,7 +2,7 @@ import { View, Text, TouchableOpacity, Image, TextInput, Alert } from 'react-nat
 import React, { useEffect } from 'react'
 import { Foundation } from '@expo/vector-icons';
 // import { RNS3 } from 'react-native-aws3';
-import useAuth from '../hooks/useAuth';
+import useAuth, { AWSURL, sendXmlHttpRequest } from '../hooks/useAuth';
 import { UploadFile } from '../components/S3Util'
 import IsLoadingHOC from '../components/IsLoadingHOC';
 
@@ -37,12 +37,24 @@ const AddPostModalScreen = ({ route, navigation, setLoading, setError }) => {
   const createPost = async (uri, user_id) => {
     // delegate error handling to higher level
 
-    const fileLoc = await UploadFile(uri, user_id); // upload file to S3, get key (user_id/fileName),
-    const body = {
+    const fileKey = await UploadFile(uri, user_id); // upload file to S3, get key (user_id/fileName),
+    const post = {
       user_id,
+      fileKey,
+      questions: {
+        inspiration,
+        meaning,
+        location
+      }
     }
 
-    // Send req to AWS lambda
+    console.log("post: " + post);
+    sendXmlHttpRequest(AWSURL + "/create-post", JSON.stringify(post)).then(postId => {
+      // successfully created post!
+      console.log("Succesfully created post with id: " + postId);
+      postId.id = postId.id;
+      return post;
+    });
   }
   
   return (
@@ -52,10 +64,12 @@ const AddPostModalScreen = ({ route, navigation, setLoading, setError }) => {
           <Foundation name="x" size={24} color="white" />
         </TouchableOpacity>
         <Text className="text-white font-bold text-lg ml-[20px]">New Post</Text>
+        {/* Next Button */}
         <TouchableOpacity onPress={async () => {
           setLoading(true);
           try {
-            const fileLoc = await UploadFile(uri, user.id); // upload file to S3, get location
+            const postId = await createPost(uri, user.id); // upload file to S3, get location
+            navigation.navigate("DesignsScreen"); // pass in postID as props
           } catch (err) {
             setError(err);
           } finally {

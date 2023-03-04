@@ -176,7 +176,10 @@ const RegisterScreen = ({ navigation, setLoading, setError }) => {
                   try {
                     await register(email, password, name, number)
                       .then(() => { console.log("Register success!") })
-                      .catch((message) => setError(message))
+                      .catch((message) => {
+                        console.error(message);
+                        setError(message)
+                      })
                       .finally(() => setLoading(false));
                   } catch (err) {
                     setError(err);
