@@ -48,8 +48,7 @@ const AddPostModalScreen = ({ route, navigation, setLoading, setError }) => {
       }
     }
 
-    console.log("post: " + post);
-    sendXmlHttpRequest(AWSURL + "/create-post", JSON.stringify(post)).then(postId => {
+    sendXmlHttpRequest("/create-post", "POST", JSON.stringify(post)).then(postId => {
       // successfully created post!
       console.log("Succesfully created post with id: " + postId);
       postId.id = postId.id;
@@ -68,8 +67,8 @@ const AddPostModalScreen = ({ route, navigation, setLoading, setError }) => {
         <TouchableOpacity onPress={async () => {
           setLoading(true);
           try {
-            const postId = await createPost(uri, user.id); // upload file to S3, get location
-            navigation.navigate("DesignsScreen"); // pass in postID as props
+            const post = await createPost(uri, user.id); // upload file to S3, get location
+            navigation.navigate("DesignsScreen", post); // pass in postID as props
           } catch (err) {
             setError(err);
           } finally {

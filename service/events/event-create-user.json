@@ -1,0 +1,4 @@
+{
+  "httpMethod": "POST",
+  "body": "{\"email\":\"test@email.com\",\"password\":\"Password1\",\"connection\":\"Username-Password-Authentication\",\"name\":\"Nudevo\",\"phone_number\":\"43431312\"}"
+}

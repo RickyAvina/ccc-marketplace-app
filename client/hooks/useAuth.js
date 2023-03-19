@@ -11,8 +11,10 @@ import { AsyncStorage } from 'react-native';
 
 const AuthContext = createContext({});
 
-export const AWSURL = "https://ajhglglol7.execute-api.us-east-1.amazonaws.com/Prod/";
-export function sendXmlHttpRequest(endpoint, data) {
+const AWSURL = "https://398k2guqig.execute-api.us-east-1.amazonaws.com/Prod/";
+
+export function sendXmlHttpRequest(endpoint, reqType, data) {
+  // REQ type is HTTP request type, ex: POST, GET, PUT
   const xhr = new XMLHttpRequest();
 
   return new Promise((resolve, reject) => {
@@ -28,7 +30,12 @@ export function sendXmlHttpRequest(endpoint, data) {
       }
     };
 
-    xhr.open("POST", endpoint);
+    if (reqType in ['GET', 'POST', 'PUT', 'DELETE']) {
+      console.error('Invalid request type');
+      return;
+    }
+
+    xhr.open(reqType, AWSURL + endpoint);
     xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     xhr.send(data);
   });
@@ -66,7 +73,7 @@ export const AuthProvider = ({ children }) => {
 
     return new Promise((resolve, reject) => {
       try {
-        sendXmlHttpRequest(AWSURL + "/login", formData)
+        sendXmlHttpRequest("/login", "POST", formData)
           .then(_user => {
             console.log(_user)
             // Set user (don't save access token for now)
@@ -104,7 +111,7 @@ export const AuthProvider = ({ children }) => {
 
     return new Promise((resolve, reject) => {
       try {
-        sendXmlHttpRequest(AWSURL + "/create-user", formData)
+        sendXmlHttpRequest(AWSURL + "/create-user", "POST", formData)
           .then((_user) => {
             console.log("success!", _user);
             // set user

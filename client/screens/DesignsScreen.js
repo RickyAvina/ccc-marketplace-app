@@ -1,25 +1,40 @@
 import { View, Text, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { LinearGradient } from 'expo-linear-gradient'
 import SafeViewAndroid from '../components/SafeViewAndroid'
 import PhotoGrid from '../components/PhotoGrid';
 import * as ImagePicker from 'expo-image-picker';
 import { data } from '../photoData'
 import { Ionicons } from '@expo/vector-icons';
+import usePosts from '../hooks/usePosts';
+import useAuth from '../hooks/useAuth';
 
 const DesignsScreen = ({route, navigation}) => {
   
-  if (route != null && route.params != null) {
-    // launch async request to upload photo, use placeholder in the meantime
-    /* (alias) const data: {
-      id: number;
-      title: string;
-      url: string;
-      time_created: string;
-    }[]
-    import data
-*/ 
-  }
+//   if (route != null && route.params != null) {
+//     // launch async request to upload photo, use placeholder in the meantime
+//     /* (alias) const data: {
+//       id: number;
+//       title: string;
+//       url: string;
+//       time_created: string;
+//     }[]
+//     import data
+// */ 
+//   }
+  // console.log(route.params, JSON.stringify(route.params));
+
+  const { user } = useAuth();
+  const {posts, getPosts}  = usePosts();
+
+
+  useEffect(() => {
+    if (posts === null) {
+      getPosts(user.id);
+    }
+  }, [posts]);
+
+  // console.log("posts: ", posts);
 
   const addPhoto = async () => {
     try {
