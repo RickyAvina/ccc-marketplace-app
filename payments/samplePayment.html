@@ -1,0 +1,43 @@
+
+<form action="https://access.payworld.cg/api/v1/payment/cardPaymentRequest" method="POST">
+
+      <label for="merchantId">Merchant Id:</label><br>
+      <input type="text" id="merchantId" name="merchantId" value="<--- Your MerchantID ---->"><br>
+      
+      <label for="shortCode">Short Code:</label><br>
+      <input type="text" id="shortCode" name="shortCode" value="<--- Your shortCode---->"><br><br>
+      
+      <label for="amount">Amount:</label><br>
+      <input type="text" id="amount" name="amount" value="<-- Transaction Amount --->"><br><br>
+      
+      <label for="orderReference">Order Reference:</label><br>
+      <input type="text" id="orderReference" name="orderReference" value="<--Order Reference --->"><br><br>
+      
+      <label for="phone">Phone:</label><br>
+      <input type="text" id="phone" name="phone" value="<--Customer Mobile Number --->"><br><br>
+      
+      <label for="email">Email:</label><br>
+      <input type="text" id="email" name="email" value="<--Customer Email Address --->"><br><br>
+      
+      <label for="firstname">First Name:</label><br>
+      <input type="text" id="firstname" name="firstname" value="<--Customer First Name --->"><br><br>
+      
+      <label for="lastname">Last Name:</label><br>
+      <input type="text" id="lastname" name="lastname" value="<--Customer Last Name --->"><br><br>
+      
+      <label for="description">Description:</label><br>
+      <input type="text" id="description" name="description" value="<-- Transaction Description --->"><br><br>
+      
+      <label for="transactionDate">TransactionDate:</label><br>
+      <input type="text" id="transactionDate" name="transactionDate" value="<--Transaction Date --->"><br><br>
+      
+      <label for="confirmation_url">Confirmation Url:</label><br>
+      <input type="text" id="confirmation_url" name="confirmation_url" placeholder="https://access.payworld.cg/api/sendposcallback" value=""><br><br>
+      
+      <label for="returnurl">Return Url:</label><br>
+      <input type="text" id="returnurl" name="returnurl" placeholder="https://access.payworld.cg/register" value=""><br><br>
+      
+      <input type="submit" value="Submit">
+    </form>
+    
+

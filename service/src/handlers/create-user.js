@@ -14,7 +14,6 @@ const docClient = new dynamodb.DocumentClient();
 // Get the DynamoDB table name from environment variables
 
 const tableName = process.env.USER_TABLE
-const auth0Tenant = process.env.AUTH0_TENANT
 
 /**
  * A simple example includes a HTTP post method to add one item to a DynamoDB table.
@@ -40,7 +39,7 @@ exports.handler = async (event) => {
   const { email, password, name, phone_number } = body;
 
   const auth0ReqBody = {
-    client_id: "Gwr6p98ErOSQtJXBqMXGZ8XRzBRsPQY3",
+    client_id: process.env.AUTH0_CLIENT_ID,
     email,
     password,
     connection: "Username-Password-Authentication",
@@ -52,7 +51,7 @@ exports.handler = async (event) => {
 
   // Create user in auth0 db
   try {
-    let response = await fetch(`https://${auth0Tenant}.us.auth0.com/dbconnections/signup`, {
+    let response = await fetch(`https://${process.env.AUTH0_TENANT}.us.auth0.com/dbconnections/signup`, {
       method: 'POST',
       body: JSON.stringify(auth0ReqBody),
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }

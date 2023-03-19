@@ -70,13 +70,13 @@ async function getOauthToken(username, password) {
     grant_type: "password",
     username,
     password,
-    audience: `https://${auth0Tenant}.us.auth0.com/api/v2/`,
+    audience: `https://${process.env.AUTH0_TENANT}.us.auth0.com/api/v2/`,
     scope: "email",
-    client_id: "Gwr6p98ErOSQtJXBqMXGZ8XRzBRsPQY3",
-    client_secret: "ARxNu23OgnnISH_5Yl6BrAS6ouX2zrwbITDbgaACd3lnjmP2heV4TRjiMObyyYIE"
+    client_id: process.env.AUTH0_CLIENT_ID,
+    client_secret: process.env.AUTH0_CLIENT_SECRET
   })
 
-  const response = await fetch(`https://${auth0Tenant}.us.auth0.com/oauth/token`, {
+  const response = await fetch(`https://${process.env.AUTH0_TENANT}.us.auth0.com/oauth/token`, {
     method: 'POST',
     headers: {
       'content-type': 'application/x-www-form-urlencoded'

@@ -11,7 +11,7 @@ import { AsyncStorage } from 'react-native';
 
 const AuthContext = createContext({});
 
-const AWSURL = "https://398k2guqig.execute-api.us-east-1.amazonaws.com/Prod/";
+const AWSURL = "https://398k2guqig.execute-api.us-east-1.amazonaws.com/Prod";
 
 export function sendXmlHttpRequest(endpoint, reqType, data) {
   // REQ type is HTTP request type, ex: POST, GET, PUT
@@ -36,6 +36,7 @@ export function sendXmlHttpRequest(endpoint, reqType, data) {
     }
 
     xhr.open(reqType, AWSURL + endpoint);
+    console.log("sending request to " + AWSURL + endpoint)
     xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     xhr.send(data);
   });
@@ -111,16 +112,18 @@ export const AuthProvider = ({ children }) => {
 
     return new Promise((resolve, reject) => {
       try {
-        sendXmlHttpRequest(AWSURL + "/create-user", "POST", formData)
+        sendXmlHttpRequest("/create-user", "POST", formData)
           .then((_user) => {
             console.log("success!", _user);
             // set user
             setUserState(_user);
             resolve();
           }).catch((err) => {
+            console.log("Error registering user " + JSON.stringify(err));
             reject(err);
           });
       } catch (err) {
+        console.log("caught error here");
         reject(err);
       }
     })
